@@ -40,7 +40,7 @@ let tectonicplates = new L.layerGroup();
 // We define an object that contains the overlays.
 // This overlay will be visible all the time.
 let overlays = {
-    Earthquakes: earthquakes,
+    'Earthquakes': earthquakes,
     'Tectonic Plates': tectonicplates
 };
 
@@ -93,6 +93,11 @@ function myStyle(feature) {
     };
   }
 
+  var myStyle2 = {
+    'color': '#FAFA37',
+    'weight': 5
+  };
+
 // This function determines the radius of the earthquake marker based on its magnitude.
 // Earthquakes with a magnitude of 0 will be plotted with a radius of 1.
 function getRadius(magnitude) {
@@ -143,12 +148,10 @@ onEachFeature: function(feature, layer) {
     earthquakes.addTo(map);
 });
 
-let site2 = 'https://github.com/fraxen/tectonicplates/blob/master/GeoJSON/PB2002_boundaries.json';
-
 // Create tectonic map layer
-d3.json(site2).then(function(data) {
+d3.json('https://raw.githubusercontent.com/fraxen/tectonicplates/master/GeoJSON/PB2002_boundaries.json').then(function(data) {
   L.geoJson(data, {
-    style: myStyle2,
-  })
-})
-
+    style: myStyle2
+  }).addTo(tectonicplates);
+  tectonicplates.addTo(map);
+});
